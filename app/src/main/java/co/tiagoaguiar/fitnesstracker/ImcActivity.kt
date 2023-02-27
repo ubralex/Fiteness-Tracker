@@ -1,5 +1,6 @@
 package co.tiagoaguiar.fitnesstracker
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 
 class ImcActivity : AppCompatActivity() {
 
@@ -29,12 +31,17 @@ class ImcActivity : AppCompatActivity() {
 
             val weight = editWeight.text.toString().toInt()
             val height = editHeight.text.toString().toInt()
-
             val result = calculateImc(weight, height)
-            Log.d("Teste", "resultado: $result")
-
             val imcResponseId = imcResponse(result)
-            Toast.makeText(this, imcResponseId, Toast.LENGTH_SHORT).show()
+            val dialog = AlertDialog.Builder(this)
+                .setTitle(getString(R.string.imc_response, result))
+                .setMessage(imcResponseId)
+                .setPositiveButton(android.R.string.ok) { dialog, which ->
+                    // CÓDIGO QUE IRÁ SER EXECUTADO APÓS O CLICK
+                }
+                .create()
+                .show()
+
         }
     }
 
@@ -61,9 +68,8 @@ class ImcActivity : AppCompatActivity() {
         // NÃO PODE INSERIR VALORES NULOS (NULL)
         // NÃO PODE COMEÇAR COM 0 (ZERO)
 
-        return (editWeight.text.toString().isNotEmpty()
-                && editHeight.text.toString().isNotEmpty()
-                && !editWeight.text.toString().startsWith("0")
-                && !editHeight.text.toString().startsWith("0"))
+        return (editWeight.text.toString().isNotEmpty() && editHeight.text.toString()
+            .isNotEmpty() && !editWeight.text.toString()
+            .startsWith("0") && !editHeight.text.toString().startsWith("0"))
     }
 }

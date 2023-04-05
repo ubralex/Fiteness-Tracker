@@ -1,4 +1,4 @@
-package co.tiagoaguiar.fitnesstracker
+package co.alexbrito.fitnesstracker
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

@@ -1,10 +1,8 @@
-package co.tiagoaguiar.fitnesstracker
+package co.alexbrito.fitnesstracker
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText

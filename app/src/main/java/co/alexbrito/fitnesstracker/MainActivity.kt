@@ -3,6 +3,7 @@ package co.alexbrito.fitnesstracker
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -10,8 +11,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import co.tiagoaguiar.fitnesstracker.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     //    private lateinit var btnImc: LinearLayout
     private lateinit var rvMain: RecyclerView
@@ -44,8 +46,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private inner class MainAdapter(private val mainItems: List<MainItem>) :
-        RecyclerView.Adapter<MainViewHolder>() {
+    override fun OnClick() {
+        Log.i("Teste", "Clicou!")
+    }
+
+    private inner class MainAdapter(
+        private val mainItems: List<MainItem>,
+        private val onItemClickListener: OnItemClickListener
+    ) : RecyclerView.Adapter<MainViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
             val view = layoutInflater.inflate(R.layout.main_item, parent, false)
             return MainViewHolder(view)
@@ -73,4 +81,5 @@ class MainActivity : AppCompatActivity() {
             container.setBackgroundColor(item.color)
         }
     }
+
 }

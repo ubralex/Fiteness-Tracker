@@ -2,5 +2,5 @@ package co.alexbrito.fitnesstracker
 
 interface OnItemClickListener {
 
-    fun OnClick()
+    fun OnClick(id: Int)
 }

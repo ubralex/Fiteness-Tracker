@@ -1,5 +1,6 @@
 package co.alexbrito.fitnesstracker
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,9 +12,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import co.tiagoaguiar.fitnesstracker.R
 
-class MainActivity : AppCompatActivity(), OnItemClickListener {
+
+class MainActivity : AppCompatActivity() {
 
     //    private lateinit var btnImc: LinearLayout
     private lateinit var rvMain: RecyclerView
@@ -39,21 +40,45 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             )
         )
 
-        val adapter = MainAdapter(mainItems)
+        val adapter = MainAdapter(mainItems) { id ->
+
+            when (id) {
+                1 -> {
+                    val intent = Intent(this@MainActivity, ImcActivity::class.java)
+                    startActivity(intent)
+                }
+
+                2 -> {
+
+                }
+            }
+            Log.i("Teste", "Clicou $id!")
+        }
+
         rvMain = findViewById(R.id.rv_main)
         rvMain.adapter = adapter
         rvMain.layoutManager = GridLayoutManager(this, 2)
 
     }
 
-    override fun OnClick() {
-        Log.i("Teste", "Clicou!")
-    }
+//    override fun OnClick(id: Int) {
+//        when(id) {
+//            1 -> {
+//                val intent = Intent(this, ImcActivity::class.java)
+//                startActivity(intent)
+//            }
+//            2 -> {
+//
+//            }
+//        }
+//        Log.i("Teste", "Clicou $id!")
+//    }
 
     private inner class MainAdapter(
         private val mainItems: List<MainItem>,
-        private val onItemClickListener: OnItemClickListener
-    ) : RecyclerView.Adapter<MainViewHolder>() {
+//        private val onItemClickListener: OnItemClickListener
+        private val onItemClickListener: (Int) -> Unit,
+    ) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
             val view = layoutInflater.inflate(R.layout.main_item, parent, false)
             return MainViewHolder(view)
@@ -68,18 +93,20 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             holder.bind(itemCurrent)
         }
 
-    }
+        private inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            fun bind(item: MainItem) {
+                val img: ImageView = itemView.findViewById(R.id.item_img_icon)
+                val name: TextView = itemView.findViewById(R.id.item_txt_name)
+                val container: LinearLayout = itemView.findViewById(R.id.item_container_imc)
 
-    private class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: MainItem) {
-            val img: ImageView = itemView.findViewById(R.id.item_img_icon)
-            val name: TextView = itemView.findViewById(R.id.item_txt_name)
-            val container: LinearLayout = itemView.findViewById(R.id.item_container_imc)
+                img.setImageResource(item.drawableId)
+                name.setText(item.textStringId)
+                container.setBackgroundColor(item.color)
 
-            img.setImageResource(item.drawableId)
-            name.setText(item.textStringId)
-            container.setBackgroundColor(item.color)
+                container.setOnClickListener {
+                    onItemClickListener.invoke(item.id)
+                }
+            }
         }
     }
-
 }

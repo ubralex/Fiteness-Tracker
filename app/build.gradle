@@ -5,12 +5,13 @@ plugins {
     id 'kotlin-kapt'
 }
 
+
 android {
     compileSdk 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "co.tiagoaguiar.fitnesstracker"
+        applicationId 'co.alexbrito.fitnesstracker'
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
@@ -26,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '18'
     }
     namespace 'co.alexbrito.fitnesstracker'
 }
@@ -46,7 +47,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.core:core-ktx:1.10.0'
 
-    def room_version = "2.4.2"
+    def room_version = '2.5.1'
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 

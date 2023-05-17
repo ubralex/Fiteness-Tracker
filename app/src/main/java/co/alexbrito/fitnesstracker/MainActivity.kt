@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 2 -> {
-
+                    val intent = Intent(this@MainActivity, TmbActivity::class.java)
+                    startActivity(intent)
                 }
             }
             Log.i("Teste", "Clicou $id!")

@@ -37,6 +37,7 @@ class ImcActivity : AppCompatActivity() {
             val height = editHeight.text.toString().toInt()
             val result = calculateImc(weight, height)
             val imcResponseId = imcResponse(result)
+
             AlertDialog.Builder(this)
                 .setTitle(getString(R.string.imc_response, result))
                 .setMessage(imcResponseId)
@@ -58,6 +59,7 @@ class ImcActivity : AppCompatActivity() {
                 }
                 .create()
                 .show()
+
             val service = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             service.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
@@ -77,7 +79,7 @@ class ImcActivity : AppCompatActivity() {
     }
 
     private fun openListActivity() {
-        val intent = Intent(this@ImcActivity, ListCalcActivity::class.java)
+        val intent = Intent(this, ListCalcActivity::class.java)
         intent.putExtra("type", "imc")
         startActivity(intent)
     }
@@ -102,11 +104,9 @@ class ImcActivity : AppCompatActivity() {
     }
 
     private fun validate(): Boolean {
-        // NÃO PODE INSERIR VALORES NULOS (NULL)
-        // NÃO PODE COMEÇAR COM 0 (ZERO)
-
-        return (editWeight.text.toString().isNotEmpty() && editHeight.text.toString()
-            .isNotEmpty() && !editWeight.text.toString()
-            .startsWith("0") && !editHeight.text.toString().startsWith("0"))
+        return (editWeight.text.toString().isNotEmpty()
+                && editHeight.text.toString().isNotEmpty()
+                && !editWeight.text.toString().startsWith("0")
+                && !editHeight.text.toString().startsWith("0"))
     }
 }
